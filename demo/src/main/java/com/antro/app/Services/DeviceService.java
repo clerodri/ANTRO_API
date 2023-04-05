@@ -1,6 +1,7 @@
 package com.antro.app.Services;
 
 
+import com.antro.app.Models.Dato;
 import com.antro.app.Models.Device;
 import com.antro.app.Models.Usuario;
 import com.antro.app.Repositories.DeviceRepository;
@@ -19,10 +20,11 @@ public class DeviceService {
         private MongoTemplate mongoTemplate;
 
     public Device createDevice(String imdbId, String deviceName){
-        Device device=  deviceRepository.insert(new Device(imdbId,deviceName));  // this meth return the data/object that u re inserting.
+        Device device=  deviceRepository.insert(new Device(deviceName));  // this meth return the data/object that u re inserting.
         mongoTemplate.update(Usuario.class)   //updating  database adding new information/
                 .matching(Criteria.where("imdbId").is(imdbId))
                 .apply(new Update().push("devices").value(device)).first();
+
         return device;
     }
 

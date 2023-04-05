@@ -12,12 +12,11 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @NoArgsConstructor
 public class Device {
     private ObjectId id;
-    private String imdbId;
+
     private String deviceName;
     private String modelName;
 
-    public Device(String imdbId,String deviceName){
+    public Device(String deviceName){
         this.deviceName= deviceName;
-        this.imdbId = imdbId;
     }
 }
