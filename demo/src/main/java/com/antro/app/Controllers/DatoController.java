@@ -1,8 +1,7 @@
 package com.antro.app.Controllers;
 
-
-import com.antro.app.Models.Cliente;
-import com.antro.app.Models.Gps;
+import com.antro.app.Models.Dato;
+import com.antro.app.Services.DataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,15 +10,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class ClientController {
+public class DatoController {
     @Autowired
-    ClientService clientService;
+    private DataService dataService;
 
-    @PostMapping("/cliente")
-    public ResponseEntity<?> saveData(@RequestBody Cliente user){
+
+    @PostMapping("/datos")
+    public ResponseEntity<?> saveData(@RequestBody Dato dato){
         try {
-            clientService.addClient(user);
-            return new ResponseEntity<>(user, HttpStatus.CREATED);
+            Dato  d = dataService.addData(dato.getDeviceId(),dato.getLatitud(),dato.getLongitud());
+            return new ResponseEntity<>(d, HttpStatus.CREATED);
         }catch (Exception e){
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
