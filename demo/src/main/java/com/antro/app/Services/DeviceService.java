@@ -19,10 +19,10 @@ public class DeviceService {
         @Autowired
         private MongoTemplate mongoTemplate;
 
-    public Device createDevice(String imdbId, String deviceName){
-        Device device=  deviceRepository.insert(new Device(deviceName));  // this meth return the data/object that u re inserting.
+    public Device createDevice( Device dev){
+        Device device=  deviceRepository.insert(new Device(dev.getDeviceName(),dev.getModelName()));  // this meth return the data/object that u re inserting.
         mongoTemplate.update(Usuario.class)   //updating  database adding new information/
-                .matching(Criteria.where("imdbId").is(imdbId))
+                .matching(Criteria.where("imdbId").is(dev.getImdbId()))
                 .apply(new Update().push("devices").value(device)).first();
 
         return device;

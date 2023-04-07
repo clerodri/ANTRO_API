@@ -21,8 +21,8 @@ public class DeviceController {
     private DeviceService deviceService;
 
     @PostMapping("/devices")
-    public ResponseEntity<?> createDevice(@RequestBody Map<String,String> payload){
-        return new ResponseEntity<>(deviceService.createDevice(payload.get("imdbId"),payload.get("deviceName")), HttpStatus.CREATED);
+    public ResponseEntity<?> createDevice(@RequestBody Device device){
+        return new ResponseEntity<>(deviceService.createDevice(device), HttpStatus.CREATED);
     }
 
 }
